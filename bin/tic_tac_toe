@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require File.join(File.expand_path(File.dirname(__FILE__)), '..', 'lib', 'console_ttt')
+require 'tic_tac_toe'
+
+include ConsoleTTT
+
+player1_mark = "X"
+player2_mark = "O"
+current_player_mark = "X"
+
+game = TicTacToe::Game.new(player1_mark, player2_mark, current_player_mark, board=nil)
+io = InputOutput.new
+view = BoardView.new(game.board, io)
+console_client = ConsoleClient.new(game, io, view)
+console_client.game_runner
