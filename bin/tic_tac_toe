@@ -3,14 +3,13 @@
 require File.join(File.expand_path(File.dirname(__FILE__)), '..', 'lib', 'console_ttt')
 require 'tic_tac_toe'
 
-include ConsoleTTT
 
-# player1_mark = "X"
-# player2_mark = "O"
-# current_player_mark = "X"
+io = ConsoleTTT::InputOutput.new
 
-# game = TicTacToe::Game.new(player1_mark, player2_mark, current_player_mark, board=nil)
-io = InputOutput.new
-# view = BoardView.new(game.board, io)
-console_client = ConsoleClient.new(io)
+game_configuration = ConsoleTTT::GameConfiguration.new(io)
+game_configuration.setup!
+
+game = TicTacToe::Game.new(game_configuration.player1_mark, game_configuration.player2_mark, game_configuration.current_player)
+
+console_client = ConsoleTTT::ConsoleClient.new(io, game, game_configuration)
 console_client.play!
