@@ -2,11 +2,11 @@ module ConsoleTTT
   class ConsoleClient
     attr_accessor :io, :game, :view, :game_configuration
 
-    def initialize(io, game, game_configuration)
+    def initialize(io, game, game_configuration, view)
       @io = io
       @game = game
       @game_configuration = game_configuration
-      @view = BoardView.new(game.board, io)
+      @view = view
     end
 
     def play!
@@ -14,11 +14,16 @@ module ConsoleTTT
         if game.current_player_mark == game_configuration.computer_opponent_mark
           game.take_turn(game.generate_ai_move)
         else
-          move = get_move(io)
-          game.take_turn(move)
+          loop do
+            move = get_move(io)
+            turn = game.take_turn(move)
+            break if turn == true
+            display_error_message(io)
+          end
         end
         display_board
       end
+      end_game(io)
     end
 
     private
@@ -34,6 +39,23 @@ module ConsoleTTT
 
     def display_board
       view.display
+    end
+
+    def display_error_message(io)
+      io.output("The cell number you entered is invalid. Please try again.")
+    end
+
+    def end_game(io)
+      display_tie_message(io) if game.tie?
+      display_winner_message(io) if game.winner?
+    end
+
+    def display_tie_message(io)
+      io.output("Game is over. Result: tie game.")
+    end
+
+    def display_winner_message(io)
+      io.output("Game is over. Result: Player #{game.get_winning_player} won.")
     end
   end
 end
