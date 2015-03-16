@@ -1,6 +1,6 @@
 module ConsoleTTT
   class ConfigValue
-    attr_reader :prompt
+    attr_reader :prompt, :value
 
     def initialize(io, prompt)
       @io, @prompt = io, prompt
@@ -10,7 +10,7 @@ module ConsoleTTT
       @io.output(prompt)
       input = get_input
       if valid?(input)
-        yield value = input.to_i
+        @value = input.to_i
         true
       else
         false
