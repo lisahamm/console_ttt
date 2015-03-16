@@ -40,20 +40,23 @@ module ConsoleTTT
 
 
     def collect_game_specifications_from_user
-      values = []
-      prompts.each do |prompt|
+      prompts.map do |prompt|
         config_value = ConfigValue.new(io, prompt)
-        config_value.run! do |value|
-          values << value
+        until config_value.run! == true
+          @io.output(invalid_input_message)
         end
+        config_value.value
       end
-      values
     end
 
     def prompts
       ["Please choose your mark (X or O). Enter 1 for X or 2 for O:",
        "Do you want to go first or second? Enter 1 or 2:",
        "Do you want to play against the computer? Enter 1 for yes or 2 for no:"]
+    end
+
+    def invalid_input_message
+      "The value you entered is not valid. Please try again."
     end
   end
 end
