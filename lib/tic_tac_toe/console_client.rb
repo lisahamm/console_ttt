@@ -11,16 +11,7 @@ module ConsoleTTT
 
     def play!
       while game.in_progress?
-        if game.current_player_mark == game_configuration.computer_opponent_mark
-          game.take_turn(game.generate_ai_move)
-        else
-          loop do
-            move = get_move(io)
-            turn = game.take_turn(move)
-            break if turn == true
-            display_error_message(io)
-          end
-        end
+        take_turn
         display_board
       end
       end_game(io)
@@ -28,8 +19,31 @@ module ConsoleTTT
 
     private
 
+    def take_turn
+      ai_turn? ? ai_move : human_move
+    end
+
+    def ai_turn?
+      game.current_player_mark == game_configuration.computer_opponent_mark
+    end
+
+    def ai_move
+      game.take_turn(game.generate_ai_move)
+    end
+
+    def human_move
+      loop do
+        display_message(io, "Player #{game.current_player_mark}" + TAKE_TURN)
+        break if game.take_turn(get_move(io)) == true
+        display_message(io, INVALID_CELL_INPUT)
+      end
+    end
+
+    def display_message(io, message)
+      io.output(message)
+    end
+
     def get_move(io)
-      io.output("Player #{game.current_player_mark}, it's your turn. What cell would you like to mark (1-9)?")
       get_user_input(io).chomp.to_i - 1
     end
 
@@ -41,21 +55,14 @@ module ConsoleTTT
       view.display
     end
 
-    def display_error_message(io)
-      io.output("The cell number you entered is invalid. Please try again.")
-    end
-
     def end_game(io)
-      display_tie_message(io) if game.tie?
-      display_winner_message(io) if game.winner?
+      message = game.winner? ? GAME_OVER_WIN + "Player #{game.get_winning_player}" : GAME_OVER_TIE
+      display_message(io, message)
     end
 
-    def display_tie_message(io)
-      io.output("Game is over. Result: tie game.")
-    end
-
-    def display_winner_message(io)
-      io.output("Game is over. Result: Player #{game.get_winning_player} won.")
-    end
+    TAKE_TURN = ", it's your turn. What cell would you like to mark (1-9)?"
+    INVALID_CELL_INPUT = "The cell number you entered is invalid. Please try again."
+    GAME_OVER_WIN = "Game is over. Winner: "
+    GAME_OVER_TIE = "Game is over. Result: tie game."
   end
 end
