@@ -38,7 +38,6 @@ module ConsoleTTT
       mark == "X" ? "O" : "X"
     end
 
-
     def collect_game_specifications_from_user
       prompts.map do |prompt|
         config_value = ConfigValue.new(io, prompt)
