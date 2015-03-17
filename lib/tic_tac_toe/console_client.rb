@@ -34,17 +34,14 @@ module ConsoleTTT
     def human_move
       loop do
         display_message(io, "Player #{game.current_player_mark}" + TAKE_TURN)
-        break if game.take_turn(get_move(io)) == true
+        move = get_user_input(io).chomp.to_i - 1
+        break if game.take_turn(move) == true
         display_message(io, INVALID_CELL_INPUT)
       end
     end
 
     def display_message(io, message)
       io.output(message)
-    end
-
-    def get_move(io)
-      get_user_input(io).chomp.to_i - 1
     end
 
     def get_user_input(io)
