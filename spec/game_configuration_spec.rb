@@ -4,11 +4,18 @@ module ConsoleTTT
   describe GameConfiguration do
     let(:io) {double(InputOutput.new)}
     let(:game_configuration) {GameConfiguration.new(io)}
+    let(:prompts) {["Please choose your mark (X or O). Enter 1 for X or 2 for O:",
+                    "Do you want to go first or second? Enter 1 or 2:",
+                    "Do you want to play against the computer? Enter 1 for yes or 2 for no:"]
+}
 
     describe "#setup!" do
       context "when user selects X as mark, position as first, and computer as opponent" do
         before(:each) do
-          allow(game_configuration).to receive(:collect_game_specifications_from_user).and_return([1,1,1])
+          expect(io).to receive(:output).with(prompts[0])
+          expect(io).to receive(:output).with(prompts[1])
+          expect(io).to receive(:output).with(prompts[2])
+          expect(io).to receive(:input).and_return("1", "1", "1")
           game_configuration.setup!
         end
 
@@ -28,7 +35,10 @@ module ConsoleTTT
 
       context "when user selects O as mark, position as first, and no computer opponent" do
         before(:each) do
-          allow(game_configuration).to receive(:collect_game_specifications_from_user).and_return([2,1,2])
+          expect(io).to receive(:output).with(prompts[0])
+          expect(io).to receive(:output).with(prompts[1])
+          expect(io).to receive(:output).with(prompts[2])
+          expect(io).to receive(:input).and_return("2", "1", "2")
           game_configuration.setup!
         end
 
