@@ -1,10 +1,11 @@
 module ConsoleTTT
   class GameRunner
-    attr_accessor :io, :game, :view
+    attr_accessor :io, :game, :view, :game_configuration
 
-    def initialize(io, game, view)
+    def initialize(io, game, game_configuration, view)
       @io = io
       @game = game
+      @game_configuration = game_configuration
       @view = view
     end
 
@@ -23,7 +24,7 @@ module ConsoleTTT
     end
 
     def ai_turn?
-      game.current_player_mark == game.computer_opponent_mark
+      game.current_player_mark == game_configuration.computer_opponent_mark
     end
 
     def ai_move
@@ -34,7 +35,7 @@ module ConsoleTTT
       loop do
         display_message(io, "Player #{game.current_player_mark}" + TAKE_TURN)
         move = get_user_input(io).chomp.to_i - 1
-        break if game.take_turn(move) == true
+        break if game.take_turn(move)
         display_message(io, INVALID_CELL_INPUT)
       end
     end
