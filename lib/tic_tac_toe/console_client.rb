@@ -1,11 +1,10 @@
 module ConsoleTTT
   class ConsoleClient
-    attr_accessor :io, :game, :view, :game_configuration
+    attr_accessor :io, :game, :view
 
-    def initialize(io, game, game_configuration, view)
+    def initialize(io, game, view)
       @io = io
       @game = game
-      @game_configuration = game_configuration
       @view = view
     end
 
@@ -24,7 +23,7 @@ module ConsoleTTT
     end
 
     def ai_turn?
-      game.current_player_mark == game_configuration.computer_opponent_mark
+      game.current_player_mark == game.computer_opponent_mark
     end
 
     def ai_move
