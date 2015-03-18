@@ -12,6 +12,7 @@ module ConsoleTTT
 
           allow(io).to receive_messages(:output => "Some prompt", :input => "1")
           expect(config_value.run!).to eq true
+          expect(config_value.value).to eq 1
         end
       end
 
@@ -24,6 +25,7 @@ module ConsoleTTT
 
           allow(io).to receive_messages(:output => "Some prompt", :input => "3")
           expect(config_value.run!).to eq false
+          expect(config_value.value).to be_nil
         end
       end
 
