@@ -11,5 +11,5 @@ game_configuration.setup!
 
 game = TicTacToe::Game.new(game_configuration.player1_mark, game_configuration.player2_mark, game_configuration.current_player_mark)
 view = ConsoleTTT::BoardView.new(game.board, io)
-console_client = ConsoleTTT::ConsoleClient.new(io, game, game_configuration, view)
-console_client.play!
+game_runner = ConsoleTTT::GameRunner.new(io, game, game_configuration, view)
+game_runner.play!

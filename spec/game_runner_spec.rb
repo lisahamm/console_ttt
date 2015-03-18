@@ -1,15 +1,15 @@
 require "spec_helper"
 
 module ConsoleTTT
-  describe ConsoleClient do
+  describe GameRunner do
     let(:io) {double(InputOutput.new)}
     let(:game) {double(TicTacToe::Game.new)}
     let(:game_configuration) {double(GameConfiguration.new)}
-    let(:console_client) {ConsoleClient.new(io, game, view, game_configuration)}
+    let(:game_runner) {GameRunner.new(io, game, view, game_configuration)}
 
     context "#play!" do
       it "runs the game" do
-        expect(console_client.play!)
+        expect(game_runner.play!)
       end
     end
   end

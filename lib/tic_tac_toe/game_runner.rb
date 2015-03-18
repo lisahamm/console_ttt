@@ -1,5 +1,5 @@
 module ConsoleTTT
-  class ConsoleClient
+  class GameRunner
     attr_accessor :io, :game, :view
 
     def initialize(io, game, view)
