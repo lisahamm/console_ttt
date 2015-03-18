@@ -1,6 +1,6 @@
 module ConsoleTTT
   class GameConfiguration
-    attr_reader :player1_mark, :player2_mark, :current_player_mark, :computer_opponent_mark
+    attr_reader :player1_mark, :player2_mark, :current_player_mark, :computer_opponent_mark, :options
 
     def initialize(io)
       @io = io
@@ -11,6 +11,13 @@ module ConsoleTTT
       mark = mark == 1 ? "X" : "O"
       @player1_mark, @player2_mark, @current_player_mark = setup_player_marks(mark, position)
       @computer_opponent_mark = get_computer_opponent_mark(computer_opponent, mark)
+    end
+
+    def options
+      {player1_mark: player1_mark,
+       player2_mark: player2_mark,
+       current_player_mark: current_player_mark,
+       computer_opponent_mark: computer_opponent_mark}
     end
 
     private
@@ -42,7 +49,7 @@ module ConsoleTTT
       prompts.map do |prompt|
         config_value = ConfigValue.new(io, prompt)
         until config_value.run! == true
-          @io.output(invalid_input_message)
+          @io.output(INVALID_INPUT)
         end
         config_value.value
       end
@@ -54,8 +61,6 @@ module ConsoleTTT
        "Do you want to play against the computer? Enter 1 for yes or 2 for no:"]
     end
 
-    def invalid_input_message
-      "The value you entered is not valid. Please try again."
-    end
+    INVALID_INPUT = "The value you entered is not valid. Please try again."
   end
 end
