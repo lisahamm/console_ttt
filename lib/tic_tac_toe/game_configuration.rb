@@ -7,17 +7,17 @@ module ConsoleTTT
     end
 
     def setup!
-      mark, position, computer_opponent = collect_game_specifications_from_user
+      mark, player_order, computer_opponent = collect_game_specifications_from_user
       mark = mark == 1 ? "X" : "O"
-      @player1_mark, @player2_mark, @current_player_mark = setup_player_marks(mark, position)
+      @player1_mark, @player2_mark, @current_player_mark = setup_player_marks(mark, player_order)
       @computer_opponent_mark = get_computer_opponent_mark(computer_opponent, mark)
     end
 
     private
     attr_reader :io
 
-    def setup_player_marks(mark, position)
-      case position
+    def setup_player_marks(mark, player_order)
+      case player_order
       when 1
         [mark, get_opponent(mark), mark]
       when 2
