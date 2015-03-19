@@ -29,8 +29,9 @@ module ConsoleTTT
         view = double(BoardView.new(game.board, io))
         expect(view).to receive(:display).exactly(6).times
         game_runner = GameRunner.new(io, game, game_configuration, view)
-        expect(io).to receive(:output).with("Player X" + GameRunner::TAKE_TURN).exactly(3).times
-        expect(io).to receive(:input).and_return("2", "3", "6")
+        expect(io).to receive(:output).with("Player X" + GameRunner::TAKE_TURN).exactly(4).times
+        expect(io).to receive(:output).with(GameRunner::INVALID_CELL_INPUT)
+        expect(io).to receive(:input).and_return("10", "2", "3", "6")
         expect(game).to receive(:generate_ai_move).and_return(0, 3, 6)
         expect(io).to receive(:output).with(GameRunner::GAME_OVER_WIN + "Player O")
         game_runner.play!
