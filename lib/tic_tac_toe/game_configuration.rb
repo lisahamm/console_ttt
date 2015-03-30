@@ -10,7 +10,8 @@ module ConsoleTTT
       mark, player_order, computer_opponent = collect_game_specifications_from_user
       mark = mark == 1 ? valid_marks[0] : valid_marks[1]
       @options = {}
-      @options[:player1_mark], @options[:player2_mark], @options[:current_player_mark] = setup_player_marks(mark, player_order)
+      player1_mark, player2_mark, @options[:current_player_mark] = setup_player_marks(mark, player_order)
+      @options[:player1], @options[:player2] = TicTacToe::Player.new(player1_mark), TicTacToe::Player.new(player2_mark)
       @options[:ai_mark] = get_computer_opponent_mark(computer_opponent, mark)
     end
 
