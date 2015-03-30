@@ -40,7 +40,7 @@ module ConsoleTTT
 
     def collect_game_specifications_from_user
       prompts.map do |prompt|
-        config_value = ConfigValue.new(io, prompt)
+        config_value = ConfigValue.new(io, prompt, valid_values)
         until config_value.run! == true
           @io.output(invalid_input_message)
         end
@@ -56,6 +56,10 @@ module ConsoleTTT
 
     def invalid_input_message
       "The value you entered is not valid. Please try again."
+    end
+
+    def valid_values
+      ["1", "2"]
     end
   end
 end
