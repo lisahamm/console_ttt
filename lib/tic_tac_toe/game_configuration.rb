@@ -1,6 +1,6 @@
 module ConsoleTTT
   class GameConfiguration
-    attr_reader :player1_mark, :player2_mark, :current_player_mark, :computer_opponent_mark
+    attr_reader :options
 
     def initialize(io)
       @io = io
@@ -9,8 +9,9 @@ module ConsoleTTT
     def setup!
       mark, player_order, computer_opponent = collect_game_specifications_from_user
       mark = mark == 1 ? valid_marks[0] : valid_marks[1]
-      @player1_mark, @player2_mark, @current_player_mark = setup_player_marks(mark, player_order)
-      @computer_opponent_mark = get_computer_opponent_mark(computer_opponent, mark)
+      @options = {}
+      @options[:player1_mark], @options[:player2_mark], @options[:current_player_mark] = setup_player_marks(mark, player_order)
+      @options[:ai_mark] = get_computer_opponent_mark(computer_opponent, mark)
     end
 
     private
