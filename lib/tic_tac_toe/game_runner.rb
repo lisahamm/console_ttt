@@ -24,7 +24,7 @@ module ConsoleTTT
     end
 
     def ai_turn?
-      game.current_player_mark == game_configuration.computer_opponent_mark
+      game.current_player_mark == game.ai_mark
     end
 
     def ai_move
