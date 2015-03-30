@@ -20,7 +20,6 @@ Run game!
 
     $ bundle exec ./bin/tic_tac_toe
 
-
 ## Usage
 
 The game is setup for two human players or one human player and an unbeatable computer player.
