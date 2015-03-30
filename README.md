@@ -18,7 +18,7 @@ Install dependencies
 
 Run game!
 
-    $ ./bin/tic_tac_toe
+    $ bundle exec ./bin/tic_tac_toe
 
 
 ## Usage
